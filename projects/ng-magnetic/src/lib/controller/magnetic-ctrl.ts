@@ -1,5 +1,12 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, EventEmitter } from '@angular/core';
 import { gsap } from 'gsap';
+
+export class MagneticOptions {
+    hDelta: number;
+    vDelta: number;
+    speed: number;
+    releaseSpeed: number;
+}
 
 export class MagneticCtrl {
     el: ElementRef;
@@ -9,17 +16,19 @@ export class MagneticCtrl {
     width;
     height;
 
-    #defaultOptions = {
-        y: 0.2,
-        x: 0.2,
-        s: 0.2,
-        rs: 0.7,
+    onEnter: EventEmitter<any> = new EventEmitter<any>();
+    onLeave: EventEmitter<any> = new EventEmitter<any>();
+
+    #defaultOptions: MagneticOptions = {
+        hDelta: 0.2, // horizontal delta
+        vDelta: 0.2, // vertical delta
+        speed: 0.2, // speed
+        releaseSpeed: 0.7, // release speed
     };
 
     constructor(el, options = {}) {
-        console.log(el);
         this.el = el;
-        this.options = {...this.#defaultOptions, ...options}
+        this.options = { ...this.#defaultOptions, ...options };
 
         this.y = 0;
         this.x = 0;
@@ -41,20 +50,20 @@ export class MagneticCtrl {
             this.width = this.el['nativeElement'].offsetWidth;
             this.height = this.el['nativeElement'].offsetHeight;
 
-            console.log('enter');
+            this.onEnter.emit('enter');
         });
 
         this.el['nativeElement'].addEventListener('mousemove', (e) => {
-            const y = (e.clientY - this.y - this.height / 2) * this.options.y;
-            const x = (e.clientX - this.x - this.width / 2) * this.options.x;
+            const y = (e.clientY - this.y - this.height / 2) * this.options.vDelta;
+            const x = (e.clientX - this.x - this.width / 2) * this.options.hDelta;
 
-            this.move(x, y, this.options.s);
+            this.move(x, y, this.options.speed);
         });
 
         this.el['nativeElement'].addEventListener('mouseleave', (e) => {
-            this.move(0, 0, this.options.rs);
+            this.move(0, 0, this.options.releaseSpeed);
 
-            console.log('leave');
+            this.onLeave.emit('leave');
         });
     }
 
