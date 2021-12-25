@@ -57,7 +57,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ng-magnetic-app",
+            "outputPath": "docs",
             "index": "projects/ng-magnetic-app/src/index.html",
             "main": "projects/ng-magnetic-app/src/main.ts",
             "polyfills": "projects/ng-magnetic-app/src/polyfills.ts",

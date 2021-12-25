@@ -1,5 +1,5 @@
 {
-  "name": "ng-magnetic",
+  "name": "@wecodeit/ng-magnetic",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^11.0.9",

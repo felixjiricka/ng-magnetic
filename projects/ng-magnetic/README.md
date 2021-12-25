@@ -1,24 +1,112 @@
-# NgMagnetic
+<h1 align="center">Welcome to @wecodeit/ng-magnetic 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="#" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+</p>
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.9.
+> Angular Wrapper of michaelgudzevskyi/cursor-hover-effect-gsap for a custom cursor and magnetic cursor effect.
 
-## Code scaffolding
+### 🏠 [Homepage](https://github.com/felixjiricka/ng-magnetic)
 
-Run `ng generate component component-name --project ng-magnetic` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-magnetic`.
-> Note: Don't forget to add `--project ng-magnetic` or else it will be added to the default project in your `angular.json` file. 
+### ✨ [Demo](https://github.com/felixjiricka/ng-magnetic)
 
-## Build
+## Install
 
-Run `ng build ng-magnetic` to build the project. The build artifacts will be stored in the `dist/` directory.
+```sh
+npm install @wecodeit/ng-magnetic
+```
 
-## Publishing
+## Usage
+Import the ```NgMagneticModule``` and ```NgCursorModule``` in your app.module.ts:
 
-After building your library with `ng build ng-magnetic`, go to the dist folder `cd dist/ng-magnetic` and run `npm publish`.
+```ts
+import { NgMagneticModule, NgCursorModule } from 'ng-magnetic';
 
-## Running unit tests
+@NgModule({
+  imports: [
+    BrowserModule,
+    NgMagneticModule,
+    NgCursorModule
+  ],
+})
+export class AppModule { }
+```
 
-Run `ng test ng-magnetic` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Use the ng-cursor component inside your main component for example ```app.component.html```:
 
-## Further help
+```html
+<router-outlet></router-outlet>
+<ng-cursor></ng-cursor>
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+####Magnetic Effect
+To apply the magnetic effect, simply add the ```ngMagnetic``` directive to your element:
+
+```html
+<div class="cb-demo-item" ngMagnetic [options]="magneticOptions">
+    <div class="cb-demo-item-title">Magnetic</div>
+        <div class="cb-demo-item-text">
+            Magnetic via [data-magnetic] attribute
+        </div>
+    </div>
+</div>
+```
+
+###### Inputs
+```typescript
+  /** options of ngMagnetic effect */
+  @Input() options = {
+      hDelta: 0.2, // horizontal delta
+      vDelta: 0.2, // vertical delta,
+      speed: 0.2, // speed
+      releaseSpeed: //release Speed
+  };
+```
+
+####Custom Cursor
+To modify your cursor, simply use the following attributes:
+```html
+    <!--  add size class xl or lg-->
+    <div data-cursor="-xl"></div>
+
+    <!--  add opaque effect to the cursor -->
+    <div data-cursor="-opaque"></div>
+
+     <!-- you can also use multiple styles at once -->
+    <div data-cursor="-xl -opaque"></div>
+
+    <!-- set image of cursor -->
+    <div data-cursor-image="https://picsum.photos/200/300"></div>
+
+     <!-- set cursor text -->
+    <div data-cursor-text="Hello!"></div>
+
+    <!-- use sticky effect -->
+    <div data-cursor="-exclusion -lg" data-cursor-stick="#cursor-stick-area">
+        <div class="cb-demo-item-title" id="cursor-stick-area">
+            Sticky
+        </div>
+    </div>
+```
+
+## Author
+
+👤 **Felix Jiricka**
+
+* Website: www.wecodeit.dev
+* Github: [@felixjiricka](https://github.com/felixjiricka)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/felixjiricka/ng-magnetic/issues). 
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
