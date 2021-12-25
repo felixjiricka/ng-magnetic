@@ -5,6 +5,7 @@ import {
     Input,
     OnInit,
     ViewChild,
+    ViewEncapsulation,
 } from '@angular/core';
 import { gsap } from 'gsap';
 
@@ -23,6 +24,7 @@ export class CursorOptions {
         </div>
     `,
     styleUrls: ['ng-cursor.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class NgCursorComponent implements OnInit, AfterViewInit {
     @ViewChild('cursor') cursorEl: ElementRef<HTMLDivElement>;

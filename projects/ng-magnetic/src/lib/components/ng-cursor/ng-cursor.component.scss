@@ -63,7 +63,7 @@
         color:white;
 
         border-radius: 50%;
-        transition:opacity 0.4s, transform 0.3s;
+        transition: transform 0.3s;
     }
 
     &.-exclusion {
@@ -170,6 +170,12 @@
     &.-lg {
         &:before, .cb-cursor-image {
             transform:scale(2);
+        }
+    }
+
+    &.-xl {
+        &:before, .cb-cursor-image {
+            transform:scale(3);
         }
     }
 
