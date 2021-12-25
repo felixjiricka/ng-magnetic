@@ -10,7 +10,7 @@
 
 ### 🏠 [Homepage](https://github.com/felixjiricka/ng-magnetic)
 
-### ✨ [Demo](https://github.com/felixjiricka/ng-magnetic)
+### ✨ [Demo](https://felixjiricka.github.io/ng-magnetic/)
 
 ## Install
 
