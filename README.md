@@ -1,27 +1,43 @@
-# NgMagnetic
+<h1 align="center">Welcome to @wecodeit/ng-magnetic 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="#" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.0.
+> test
 
-## Development server
+### 🏠 [Homepage](https://github.com/felixjiricka/ng-magnetic)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### ✨ [Demo](https://github.com/felixjiricka/ng-magnetic)
 
-## Code scaffolding
+## Install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```sh
+npm install @wecodeit/ng-magnetic
+```
 
-## Build
+## Usage
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```sh
+npm run start
+```
 
-## Running unit tests
+## Author
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+👤 **Felix Jiricka**
 
-## Running end-to-end tests
+* Website: www.wecodeit.dev
+* Github: [@felixjiricka](https://github.com/felixjiricka)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## 🤝 Contributing
 
-## Further help
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/felixjiricka/ng-magnetic/issues). 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
