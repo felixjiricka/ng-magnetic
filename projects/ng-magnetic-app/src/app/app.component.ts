@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { MagneticOptions } from 'projects/ng-magnetic/src/lib/controller/magnetic-ctrl';
+import { MagneticOptions } from 'projects/ng-magnetic/src/public-api';
 
 @Component({
     selector: 'app-root',
