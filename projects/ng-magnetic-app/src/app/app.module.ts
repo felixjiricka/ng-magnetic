@@ -2,8 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { NgMagneticModule } from 'ng-magnetic';
-import { NgCursorModule } from 'projects/ng-magnetic/src/public-api';
+import { NgMagneticModule, NgCursorModule } from 'ng-magnetic';
 
 @NgModule({
   declarations: [
