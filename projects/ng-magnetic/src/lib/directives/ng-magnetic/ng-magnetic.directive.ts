@@ -4,7 +4,6 @@ import {
     ElementRef,
     EventEmitter,
     Input,
-    TemplateRef,
 } from '@angular/core';
 import { gsap } from 'gsap';
 
@@ -18,7 +17,7 @@ export class MagneticOptions {
 @Directive({
     selector: '[ngMagnetic]',
 })
-export class NgMagneticDirective implements AfterViewInit {
+export class NgMagneticDirective implements AfterViewInit{
     _options: MagneticOptions;
     #x;
     #y;
@@ -42,11 +41,13 @@ export class NgMagneticDirective implements AfterViewInit {
         this.#x = 0;
         this.#width = 0;
         this.#height = 0;
-
-        this._bind();
     }
 
     constructor(private _el: ElementRef) {}
+
+    ngAfterViewInit(): void {
+        this._bind();
+    }
 
     private _bind() {
         this._el['nativeElement'].addEventListener('mouseenter', () => {
@@ -83,6 +84,4 @@ export class NgMagneticDirective implements AfterViewInit {
             duration: speed,
         });
     }
-
-    ngAfterViewInit(): void {}
 }
