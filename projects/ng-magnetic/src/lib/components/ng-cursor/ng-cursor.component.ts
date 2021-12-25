@@ -19,6 +19,7 @@ export class CursorOptions {
     template: `
         <div class="cb-cursor" #cursor>
             <div class="cb-cursor-text" #cursorText></div>
+            <div class="cb-cursor-image" #cursorImage></div>
         </div>
     `,
     styleUrls: ['ng-cursor.component.scss'],
@@ -26,9 +27,10 @@ export class CursorOptions {
 export class NgCursorComponent implements OnInit, AfterViewInit {
     @ViewChild('cursor') cursorEl: ElementRef<HTMLDivElement>;
     @ViewChild('cursorText') cursorTextEl: ElementRef<HTMLDivElement>;
+    @ViewChild('cursorImage') cursorImageEl: ElementRef<HTMLDivElement>;
+
 
     hostEl: HTMLElement;
-
     visible: boolean;
 
     #pos: {
@@ -136,6 +138,19 @@ export class NgCursorComponent implements OnInit, AfterViewInit {
             });
         });
 
+        // cursor image
+        this.hostEl.querySelectorAll('[data-cursor-image]').forEach((el) => {
+            el.addEventListener('mouseenter', function () {
+                self.setImage(this.dataset.cursorImage);
+            });
+        });
+
+        this.hostEl.querySelectorAll('[data-cursor-image]').forEach((el) => {
+            el.addEventListener('mouseleave', function () {
+                self.removeImage();
+            });
+        });
+
         // cursor
         this.hostEl.querySelectorAll('[data-cursor]').forEach((el) => {
             el.addEventListener('mouseenter', function () {
@@ -192,6 +207,16 @@ export class NgCursorComponent implements OnInit, AfterViewInit {
 
     removeText() {
         this.cursorEl.nativeElement.classList.remove('-text');
+    }
+
+    setImage(path) {
+        this.cursorImageEl.nativeElement.style.backgroundImage = `url(${path})`;
+        this.cursorEl.nativeElement.classList.add('-image');
+    }
+
+    removeImage() {
+        this.cursorImageEl.nativeElement.style.backgroundImage = `none`;
+        this.cursorEl.nativeElement.classList.remove('-image');
     }
 
     setStick(selector) {
