@@ -1,6 +1,6 @@
 {
-  "name": "ng-magnetic",
-  "version": "0.0.0",
+  "name": "@wecodeit/ng-magnetic",
+  "version": "1.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +9,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~11.0.0",
     "@angular/common": "~11.0.0",
@@ -43,5 +42,25 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2"
-  }
+  },
+  "description": "Angular Wrapper of michaelgudzevskyi/cursor-hover-effect-gsap for a custom cursor and magnetic cursor effect.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felixjiricka/ng-magnetic.git"
+  },
+  "keywords": [
+    "angular",
+    "magnetic",
+    "cursor"
+  ],
+  "author": "Felix Jiricka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/felixjiricka/ng-magnetic/issues"
+  },
+  "homepage": "https://github.com/felixjiricka/ng-magnetic#readme"
 }

@@ -12,17 +12,18 @@ export class MagneticOptions {
     vDelta: number;
     speed: number;
     releaseSpeed: number;
+    scroller: string;
 }
 
 @Directive({
     selector: '[ngMagnetic]',
 })
-export class NgMagneticDirective implements AfterViewInit{
-    _options: MagneticOptions;
+export class NgMagneticDirective implements AfterViewInit {
     #x;
     #y;
     #width;
     #height;
+    #scroller: HTMLElement;
 
     onEnter: EventEmitter<any> = new EventEmitter<any>();
     onLeave: EventEmitter<any> = new EventEmitter<any>();
@@ -32,10 +33,13 @@ export class NgMagneticDirective implements AfterViewInit{
         vDelta: 0.2, // vertical delta
         speed: 0.2, // speed
         releaseSpeed: 0.7, // release speed
+        scroller: 'body',
     };
 
+    _options: MagneticOptions = this.#defaultOptions;
+
     @Input('options')
-    set options(data: MagneticOptions) {
+    set options(data) {
         this._options = { ...this.#defaultOptions, ...data };
         this.#y = 0;
         this.#x = 0;
@@ -50,11 +54,26 @@ export class NgMagneticDirective implements AfterViewInit{
     }
 
     private _bind() {
+        this.#scroller = document.querySelector(
+            this._options.scroller
+        ) as HTMLElement;
+
         this._el['nativeElement'].addEventListener('mouseenter', () => {
-            this.#y = this._el['nativeElement'].offsetTop - window.pageYOffset;
-            this.#x = this._el['nativeElement'].offsetLeft - window.pageXOffset;
+            const isFixed = this.isFixed(this._el.nativeElement);
+
+            var scrollerLeft = this.#scroller.scrollLeft;
+            var scrollerTop = this.#scroller.scrollTop;
+
             this.#width = this._el['nativeElement'].offsetWidth;
             this.#height = this._el['nativeElement'].offsetHeight;
+
+            if(isFixed) {
+                this.#y = isFixed.y + this._el['nativeElement'].offsetTop;
+                this.#x = isFixed.x + this._el['nativeElement'].offsetLeft;
+            } else {
+                this.#y = this._el['nativeElement'].offsetTop - scrollerTop;
+                this.#x = this._el['nativeElement'].offsetLeft - scrollerLeft;
+            }
 
             this.onEnter.emit('enter');
         });
@@ -83,5 +102,29 @@ export class NgMagneticDirective implements AfterViewInit{
             overwrite: true,
             duration: speed,
         });
+    }
+
+    isFixed(elm) {
+        var el;
+        if (typeof elm === 'object') el = elm[0] || elm;
+        else if (typeof elm === 'string') el = document.querySelector(elm);
+        while (typeof el === 'object' && el.nodeName.toLowerCase() !== 'body') {
+            let style = window.getComputedStyle(el);
+            if (style.getPropertyValue('position').toLowerCase() === 'fixed') {
+                let x = this.convertPxToNumber(style.getPropertyValue('left'));
+                let y = this.convertPxToNumber(style.getPropertyValue('top'));
+
+                return {
+                    x: x,
+                    y: y
+                };
+            }
+            el = el.parentElement;
+        }
+        return null;
+    }
+
+    convertPxToNumber(val: string) {
+        return parseFloat(val.toLowerCase().replace('px', ''));
     }
 }
