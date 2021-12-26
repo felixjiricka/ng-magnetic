@@ -3,5 +3,8 @@ export type MagneticOptions = {
     vDelta?: number;
     speed?: number;
     releaseSpeed?: number;
-    scroller?: string;
+    scroller?: {
+        selector: string,
+        scrollType: 'normal' | 'transform'
+    };
 }

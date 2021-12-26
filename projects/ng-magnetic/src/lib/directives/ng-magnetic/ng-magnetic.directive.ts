@@ -26,7 +26,10 @@ export class NgMagneticDirective implements AfterViewInit {
         vDelta: 0.2, // vertical delta
         speed: 0.2, // speed
         releaseSpeed: 0.7, // release speed
-        scroller: 'body',
+        scroller: {
+            selector: 'body',
+            scrollType: 'normal',
+        },
     };
 
     _options: MagneticOptions = this.#defaultOptions;
@@ -48,24 +51,31 @@ export class NgMagneticDirective implements AfterViewInit {
 
     private _bind() {
         this.#scroller = document.querySelector(
-            this._options.scroller
+            this._options.scroller.selector
         ) as HTMLElement;
 
         this._el['nativeElement'].addEventListener('mouseenter', () => {
-            const isFixed = this.isFixed(this._el.nativeElement);
-
-            var scrollerLeft = this.#scroller.scrollLeft;
-            var scrollerTop = this.#scroller.scrollTop;
+            let scrollerLeft, scrollerTop;
 
             this.#width = this._el['nativeElement'].offsetWidth;
             this.#height = this._el['nativeElement'].offsetHeight;
 
-            if(isFixed) {
-                this.#y = isFixed.y + this._el['nativeElement'].offsetTop;
-                this.#x = isFixed.x + this._el['nativeElement'].offsetLeft;
+            const isFixed = this._isFixed(this._el.nativeElement);
+
+            // get scroll offset & handle coordinates
+            if (this._options.scroller.scrollType == 'transform') {
+                let transform = this._getScrollTransform();
+                scrollerLeft = transform.left;
+                scrollerTop = transform.top;
+
+                this.#y = this._el['nativeElement'].offsetTop - (isFixed ? 0 : scrollerTop);
+                this.#x = this._el['nativeElement'].offsetLeft - (isFixed ? 0 : scrollerLeft);
             } else {
-                this.#y = this._el['nativeElement'].offsetTop - scrollerTop;
-                this.#x = this._el['nativeElement'].offsetLeft - scrollerLeft;
+                scrollerLeft = this.#scroller.scrollLeft;
+                scrollerTop = this.#scroller.scrollTop;
+
+                this.#y = this._el['nativeElement'].offsetTop + (isFixed ? isFixed.y : -scrollerTop);
+                this.#x = this._el['nativeElement'].offsetLeft + (isFixed ? isFixed.x : -scrollerLeft);
             }
 
             this.onEnter.emit('enter');
@@ -97,19 +107,19 @@ export class NgMagneticDirective implements AfterViewInit {
         });
     }
 
-    isFixed(elm) {
+    private _isFixed(elm) {
         var el;
         if (typeof elm === 'object') el = elm[0] || elm;
         else if (typeof elm === 'string') el = document.querySelector(elm);
         while (typeof el === 'object' && el.nodeName.toLowerCase() !== 'body') {
             let style = window.getComputedStyle(el);
             if (style.getPropertyValue('position').toLowerCase() === 'fixed') {
-                let x = this.convertPxToNumber(style.getPropertyValue('left'));
-                let y = this.convertPxToNumber(style.getPropertyValue('top'));
+                let x = this._convertPxToNumber(style.getPropertyValue('left'));
+                let y = this._convertPxToNumber(style.getPropertyValue('top'));
 
                 return {
                     x: x,
-                    y: y
+                    y: y,
                 };
             }
             el = el.parentElement;
@@ -117,7 +127,25 @@ export class NgMagneticDirective implements AfterViewInit {
         return null;
     }
 
-    convertPxToNumber(val: string) {
+    private _convertPxToNumber(val: string) {
         return parseFloat(val.toLowerCase().replace('px', ''));
+    }
+
+    private _getScrollTransform() {
+        let elementToParse = document.querySelector(
+            this._options.scroller.selector
+        );
+
+        let style = window.getComputedStyle(elementToParse);
+        let transProperty = style.getPropertyValue('transform');
+
+        if (transProperty == 'none') return null;
+
+        let matrixValues = transProperty.match(/-?\d+\.?\d*/g);
+
+        return {
+            left: Math.abs(parseFloat(matrixValues[4])),
+            top: Math.abs(parseFloat(matrixValues[5])),
+        };
     }
 }

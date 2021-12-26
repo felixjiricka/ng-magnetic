@@ -1,6 +1,6 @@
-<h1 align="center">Welcome to @wecodeit/ng-magnetic 👋</h1>
+<h1>Welcome to @wecodeit/ng-magnetic 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/Version-1.2.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
@@ -59,11 +59,15 @@ To apply the magnetic effect, simply add the ```ngMagnetic``` directive to your 
 ###### Inputs
 ```typescript
   /** options of ngMagnetic effect */
-  @Input() options = {
+  @Input() options: MagneticOptions = {
       hDelta: 0.2, // horizontal delta
       vDelta: 0.2, // vertical delta,
       speed: 0.2, // speed
-      releaseSpeed: //release Speed
+      releaseSpeed: //release Speed,
+      scroller: {
+          selector: 'body', // your scroll container, if you use scrollType 'transform' pass the selector of the transformed element
+          scrollType: 'normal' // valid options are 'normal' or 'transform' if you use libraries like smooth-scrollbar
+      }
   };
 ```
 
