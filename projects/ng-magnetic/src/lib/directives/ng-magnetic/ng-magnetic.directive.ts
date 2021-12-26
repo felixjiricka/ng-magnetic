@@ -6,14 +6,7 @@ import {
     Input,
 } from '@angular/core';
 import { gsap } from 'gsap';
-
-export class MagneticOptions {
-    hDelta: number;
-    vDelta: number;
-    speed: number;
-    releaseSpeed: number;
-    scroller: string;
-}
+import { MagneticOptions } from '../../models/MagneticOptions';
 
 @Directive({
     selector: '[ngMagnetic]',

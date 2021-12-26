@@ -6,3 +6,5 @@ export * from './lib/components/ng-cursor/ng-cursor.component';
 
 export * from './lib/directives/ng-magnetic/ng-magnetic.module';
 export * from './lib/directives/ng-magnetic/ng-magnetic.directive';
+
+export * from './lib/models/MagneticOptions'
