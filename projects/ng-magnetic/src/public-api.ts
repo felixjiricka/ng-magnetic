@@ -8,3 +8,4 @@ export * from './lib/directives/ng-magnetic/ng-magnetic.module';
 export * from './lib/directives/ng-magnetic/ng-magnetic.directive';
 
 export * from './lib/models/MagneticOptions'
+export * from './lib/models/CursorOptions'

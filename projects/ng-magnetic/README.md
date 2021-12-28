@@ -1,6 +1,6 @@
 <h1>Welcome to @wecodeit/ng-magnetic 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/Version-1.2.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/Version-2.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
@@ -34,15 +34,6 @@ import { NgMagneticModule, NgCursorModule } from 'ng-magnetic';
 export class AppModule { }
 ```
 
-Use the ng-cursor component inside your main component for example ```app.component.html```:
-
-```html
-<router-outlet></router-outlet>
-<ng-cursor></ng-cursor>
-```
-
-
-
 ####Magnetic Effect
 To apply the magnetic effect, simply add the ```ngMagnetic``` directive to your element:
 
@@ -63,15 +54,20 @@ To apply the magnetic effect, simply add the ```ngMagnetic``` directive to your 
       hDelta: 0.2, // horizontal delta
       vDelta: 0.2, // vertical delta,
       speed: 0.2, // speed
-      releaseSpeed: //release Speed,
-      scroller: {
-          selector: 'body', // your scroll container, if you use scrollType 'transform' pass the selector of the transformed element
-          scrollType: 'normal' // valid options are 'normal' or 'transform' if you use libraries like smooth-scrollbar
-      }
+      releaseSpeed: //release Speed
   };
 ```
 
 ####Custom Cursor
+
+Use the ng-cursor component inside your main component for example ```app.component.html```:
+If you use a smooth-scroll library which uses translate, make sure to place the cursor outside of the transformed element.
+
+```html
+<router-outlet></router-outlet>
+<ng-cursor></ng-cursor>
+```
+
 To modify your cursor, simply use the following attributes:
 ```html
     <!--  add size class xl or lg-->
@@ -95,6 +91,16 @@ To modify your cursor, simply use the following attributes:
             Sticky
         </div>
     </div>
+```
+
+###### Inputs
+```typescript
+  /** options of the cursor */
+  @Input() options: CursorOptions = {
+      speed: 0.7,
+      ease: 'expo.out',
+      visibleTimeout: 300,
+  };
 ```
 
 ## Author

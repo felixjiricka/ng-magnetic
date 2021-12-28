@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { gsap } from 'gsap';
 import { MagneticOptions } from '../../models/MagneticOptions';
+import { Utils } from '../../utils/utils';
 
 @Directive({
     selector: '[ngMagnetic]',
@@ -26,6 +27,7 @@ export class NgMagneticDirective implements AfterViewInit {
         vDelta: 0.2, // vertical delta
         speed: 0.2, // speed
         releaseSpeed: 0.7, // release speed
+        // currently not needed
         scroller: {
             selector: 'body',
             scrollType: 'normal',
@@ -50,21 +52,24 @@ export class NgMagneticDirective implements AfterViewInit {
     }
 
     private _bind() {
+        if (typeof Element.prototype.getBoundingClientRect !== 'function') {
+            console.info('Can not initialize ngMagnetic because getBoundingClientRect() is not supported in your browser.');
+            return false;
+        }
+
         this.#scroller = document.querySelector(
             this._options.scroller.selector
         ) as HTMLElement;
 
         this._el['nativeElement'].addEventListener('mouseenter', () => {
+            /*
             let scrollerLeft, scrollerTop;
-
-            this.#width = this._el['nativeElement'].offsetWidth;
-            this.#height = this._el['nativeElement'].offsetHeight;
-
             const isFixed = this._isFixed(this._el.nativeElement);
 
             // get scroll offset & handle coordinates
             if (this._options.scroller.scrollType == 'transform') {
-                let transform = this._getScrollTransform();
+                let transform = Utils.getScrollTransform(this._options.scroller.selector);
+
                 scrollerLeft = transform.left;
                 scrollerTop = transform.top;
 
@@ -77,6 +82,13 @@ export class NgMagneticDirective implements AfterViewInit {
                 this.#y = this._el['nativeElement'].offsetTop + (isFixed ? isFixed.y : -scrollerTop);
                 this.#x = this._el['nativeElement'].offsetLeft + (isFixed ? isFixed.x : -scrollerLeft);
             }
+            */
+
+            const elData = this._el.nativeElement.getBoundingClientRect()
+            this.#y = elData.y;
+            this.#x = elData.x;
+            this.#width = elData.width;
+            this.#height = elData.height;
 
             this.onEnter.emit('enter');
         });
@@ -129,23 +141,5 @@ export class NgMagneticDirective implements AfterViewInit {
 
     private _convertPxToNumber(val: string) {
         return parseFloat(val.toLowerCase().replace('px', ''));
-    }
-
-    private _getScrollTransform() {
-        let elementToParse = document.querySelector(
-            this._options.scroller.selector
-        );
-
-        let style = window.getComputedStyle(elementToParse);
-        let transProperty = style.getPropertyValue('transform');
-
-        if (transProperty == 'none') return null;
-
-        let matrixValues = transProperty.match(/-?\d+\.?\d*/g);
-
-        return {
-            left: Math.abs(parseFloat(matrixValues[4])),
-            top: Math.abs(parseFloat(matrixValues[5])),
-        };
     }
 }

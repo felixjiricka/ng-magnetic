@@ -8,12 +8,8 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { gsap } from 'gsap';
-
-export class CursorOptions {
-    speed?: number;
-    ease?: string;
-    visibleTimeout?: number;
-}
+import { CursorOptions } from '../../models/CursorOptions';
+import { Utils } from '../../utils/utils';
 
 @Component({
     selector: 'ng-cursor',
@@ -24,13 +20,12 @@ export class CursorOptions {
         </div>
     `,
     styleUrls: ['ng-cursor.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class NgCursorComponent implements OnInit, AfterViewInit {
     @ViewChild('cursor') cursorEl: ElementRef<HTMLDivElement>;
     @ViewChild('cursorText') cursorTextEl: ElementRef<HTMLDivElement>;
     @ViewChild('cursorImage') cursorImageEl: ElementRef<HTMLDivElement>;
-
 
     hostEl: HTMLElement;
     visible: boolean;
@@ -46,6 +41,10 @@ export class NgCursorComponent implements OnInit, AfterViewInit {
         speed: 0.7,
         ease: 'expo.out',
         visibleTimeout: 300,
+        scroller: {
+            selector: 'body',
+            scrollType: 'normal',
+        },
     };
 
     constructor(private elRef: ElementRef) {}
@@ -70,12 +69,8 @@ export class NgCursorComponent implements OnInit, AfterViewInit {
 
         this.hostEl.addEventListener('mousemove', (e) => {
             this.#pos = {
-                x: this.#stick
-                    ? this.#stick.x - (this.#stick.x - e.clientX) * 0.15
-                    : e.clientX,
-                y: this.#stick
-                    ? this.#stick.y - (this.#stick.y - e.clientY) * 0.15
-                    : e.clientY,
+                x: this.#stick ? this.#stick.x - (this.#stick.x - e.clientX) * 0.15 : e.clientX,
+                y: this.#stick ? this.#stick.y - (this.#stick.y - e.clientY) * 0.15 : e.clientY,
             };
             this.update();
         });
@@ -89,17 +84,21 @@ export class NgCursorComponent implements OnInit, AfterViewInit {
         });
 
         // iframe
-        this.hostEl.querySelectorAll('a, input, textarea, button').forEach((el) => {
-            el.addEventListener('mouseenter', function () {
-                self.setState('-pointer');
+        this.hostEl
+            .querySelectorAll('a, input, textarea, button')
+            .forEach((el) => {
+                el.addEventListener('mouseenter', function () {
+                    self.setState('-pointer');
+                });
             });
-        });
 
-        this.hostEl.querySelectorAll('a, input, textarea, button').forEach((el) => {
-            el.addEventListener('mouseleave', function () {
-                self.removeState('-pointer');
+        this.hostEl
+            .querySelectorAll('a, input, textarea, button')
+            .forEach((el) => {
+                el.addEventListener('mouseleave', function () {
+                    self.removeState('-pointer');
+                });
             });
-        });
 
         // iframe
         this.hostEl.querySelectorAll('iframe').forEach((el) => {
